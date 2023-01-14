@@ -1783,7 +1783,7 @@ CREATE TABLE `profile` (
 /*Data for the table `profile` */
 
 insert  into `profile`(`id`,`id_user`,`name`,`address`,`city`,`state`,`zip_code`,`email`,`country`,`phone`,`image`,`created_date`,`dob`,`pob`,`unit_id`,`sub_unit_id`,`image_user`,`bio`) values 
-(1,1,'Muhamad Aldiansyah','fasfa','280300','280000','123','aldi@jgu.ac.id','000000','0912',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'testz'),
+(1,1,'Muhamad Aldiansyah','fasfa','280300','280000','123','aldi@jgu.ac.id','000000','0912',NULL,NULL,'2023-01-16','Tangerang',NULL,NULL,NULL,'testz'),
 (2,2,'Elon Musk',NULL,NULL,NULL,NULL,'aldi@jgu.ac.id',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'test'),
 (3,3,'Albert Einstein',NULL,NULL,NULL,NULL,'aldi@jgu.ac.id',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'aaa'),
 (4,4,'Bill Gates',NULL,NULL,NULL,NULL,'aldi@jgu.ac.id',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'bbb'),
@@ -10347,17 +10347,17 @@ CREATE TABLE `users` (
 /*Data for the table `users` */
 
 insert  into `users`(`id`,`username`,`image`,`cover`,`password`,`id_role`,`online_status`,`user_status`,`uip_cap`,`last_login`,`last_session`,`created_date`,`created_by`,`last_update`,`last_update_by`) values 
-(1,'aldi','kali-linux-black-dragon-dl0uebi8naaoitkz-dl0uebi8naaoitkz_20221103095708.jpg','220728_20230103165824.jpg','81dc9bdb52d04dc20036dbd8313ed055','1','1','','','2023-01-14 21:22:34','2023-01-14 18:30:04',NULL,NULL,NULL,NULL),
+(1,'aldi','220728_20230114223940.jpg','default.png','81dc9bdb52d04dc20036dbd8313ed055','1','1','','','2023-01-14 21:22:34','2023-01-14 18:30:04',NULL,NULL,NULL,NULL),
 (2,'elon','user.png','default.png','81dc9bdb52d04dc20036dbd8313ed055','2','','','',NULL,NULL,NULL,NULL,NULL,NULL),
 (3,'einstein','user.png','default.png','81dc9bdb52d04dc20036dbd8313ed055','2','','','',NULL,NULL,NULL,NULL,NULL,NULL),
 (4,'billgates','user.png','default.png','81dc9bdb52d04dc20036dbd8313ed055','2','','','',NULL,NULL,NULL,NULL,NULL,NULL),
 (5,'dark','user.png','default.png','81dc9bdb52d04dc20036dbd8313ed055','2','','','',NULL,NULL,NULL,NULL,NULL,NULL),
-(8,'tretanmuslim','user.png','branches_of_mathematics_20221108155858.jpg','81dc9bdb52d04dc20036dbd8313ed055','2','0','','','2023-01-02 23:59:19','2023-01-03 00:26:34',NULL,NULL,NULL,NULL),
-(9,'cokipardede','images_20221108163336.jpeg','1602641787-ilustrasi---matematika_20221108171615.png','81dc9bdb52d04dc20036dbd8313ed055','2','0','','','2023-01-03 12:27:40','2023-01-03 12:31:31',NULL,NULL,NULL,NULL),
-(10,'stevejobs','index_20221108173431.jpeg','images_20221108174805.jpeg','81dc9bdb52d04dc20036dbd8313ed055','2','0','','','2023-01-02 23:46:03','2023-01-02 23:59:16',NULL,NULL,NULL,NULL),
+(8,'tretanmuslim','user.png','default.png','81dc9bdb52d04dc20036dbd8313ed055','2','0','','','2023-01-02 23:59:19','2023-01-03 00:26:34',NULL,NULL,NULL,NULL),
+(9,'cokipardede','user.png','default.png','81dc9bdb52d04dc20036dbd8313ed055','2','0','','','2023-01-03 12:27:40','2023-01-03 12:31:31',NULL,NULL,NULL,NULL),
+(10,'stevejobs','user.png','default.png','81dc9bdb52d04dc20036dbd8313ed055','2','0','','','2023-01-02 23:46:03','2023-01-02 23:59:16',NULL,NULL,NULL,NULL),
 (11,'arxvrya','user.png','default.png','81dc9bdb52d04dc20036dbd8313ed055','2','1','','','2022-11-10 13:22:10','2022-11-10 09:56:12',NULL,NULL,NULL,NULL),
 (12,'raizky','user.png','default.png','81dc9bdb52d04dc20036dbd8313ed055','2','1','','','2022-11-14 09:46:32',NULL,NULL,NULL,NULL,NULL),
-(13,'bagus','Chou Skin Kof Mlbb Icon Glitter_20221110101443.jpg','Chou Skin Kof Mlbb Icon Glitter_20221110101225.jpg','81dc9bdb52d04dc20036dbd8313ed055','2','1','','','2022-11-14 09:47:10','2022-11-11 09:28:04',NULL,NULL,NULL,NULL),
+(13,'bagus','user.png','default.png','81dc9bdb52d04dc20036dbd8313ed055','2','1','','','2022-11-14 09:47:10','2022-11-11 09:28:04',NULL,NULL,NULL,NULL),
 (14,'farhan','user.png','default.png','81dc9bdb52d04dc20036dbd8313ed055','2','1','','','2022-11-11 10:01:09','2022-11-10 09:57:16',NULL,NULL,NULL,NULL),
 (15,'paris','user.png','default.png','81dc9bdb52d04dc20036dbd8313ed055','2','0','','','2022-11-11 09:48:41','2022-11-11 09:48:58',NULL,NULL,NULL,NULL),
 (16,'arya','user.png','default.png','81dc9bdb52d04dc20036dbd8313ed055','2','1','','','2022-11-11 11:33:31','2022-11-11 10:11:15',NULL,NULL,NULL,NULL),
