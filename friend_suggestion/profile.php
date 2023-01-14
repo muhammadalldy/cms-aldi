@@ -527,19 +527,19 @@ ddd
 													<div class="col-lg-4">
 							                            <label>Country</label>
 							                            <select name="country"  class="custom-select">
-							                                <?=dd_menu('region', 'id_wil', 'nm_wil', 'WHERE id_level_wil=0' ,'ASC', $data['country'])?>
+							                                <?=dd_menu('region', 'id_wil', 'nm_wil'," -- Please Choose --",'WHERE id_level_wil=0' ,'ASC', $data['country'])?>
 							                            </select>
 													</div>
 													<div class="col-lg-4">
 														<label>State/Province</label>
 							                            <select name="state"  class="custom-select">
-							                                <?=dd_menu('region', 'id_wil', 'nm_wil', 'WHERE id_level_wil=1' ,'ASC', $data['state'])?>
+							                                <?=dd_menu('region', 'id_wil', 'nm_wil'," -- Please Choose --", 'WHERE id_level_wil=1' ,'ASC', $data['state'])?>
 							                            </select> 
 													</div>
 													<div class="col-lg-4">
 														<label>City</label>
 							                            <select name="city"  class="custom-select">
-							                                <?=dd_menu('region', 'id_wil', 'nm_wil', 'WHERE id_level_wil=2' ,'ASC', $data['city'])?>
+							                                <?=dd_menu('region', 'id_wil', 'nm_wil'," -- Please Choose --", 'WHERE id_level_wil=2' ,'ASC', $data['city'])?>
 							                            </select>
 
 													</div>

@@ -10,7 +10,7 @@ $con = mysqli_connect($dbhost, $dbuser, $dbpass,$dbname);
 $sql = "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));";
 $db->query($sql);
 
-function dd_menu($tblName, $value, $label, $filter,$sort, $selected)
+function dd_menu($tblName, $value, $label, $selection_name,$filter,$sort,$selected)
 {
     global $dbf;
     $orderBy = " ORDER BY ".$label." ".$sort;
@@ -18,7 +18,7 @@ function dd_menu($tblName, $value, $label, $filter,$sort, $selected)
     
     $result = $dbf->query($sqldd_menu);
     
-    echo "<option value=\"\">-- Please Choose --</option>";
+    echo "<option value=\"\">".$selection_name."</option>";
     if ($result->numRows() > 0) {
         $rows_all = $result->fetchAll();
         foreach ($rows_all as $rows) {

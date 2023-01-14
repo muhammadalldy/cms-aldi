@@ -106,14 +106,14 @@ if(isset($_POST["button"]) && $_POST["button"]=="submit"){
                                         <div class="form-group">
 											<label>Icon:</label>
                                             <select name="txt01_icon" class="custom-select" required> 
-												<?=dd_menu('lookup_icon', 'icon_data', 'icon_data', '' ,'ASC', $data['txt01_icon'])?>
+												<?=dd_menu('lookup_icon', 'icon_data', 'icon_data'," -- Please Choose --", '' ,'ASC', $data['txt01_icon'])?>
                                             </select>
 										</div>
 
                                         <div class="form-group">
 											<label>Status:</label>
                                             <select name="txt01_is_active" class="custom-select" required> 
-												<?=dd_menu('lookup_active', 'id', 'id', '' ,'ASC', $data['txt01_icon'])?>
+												<?=dd_menu('lookup_active', 'id', 'id'," -- Please Choose --", '' ,'ASC', $data['txt01_icon'])?>
                                             </select>
                                         </div>
 

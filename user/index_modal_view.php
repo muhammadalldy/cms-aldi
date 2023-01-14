@@ -35,7 +35,7 @@
 											<div class="col-md-3">									
 												<div class="form-group">
 													
-													<img id="image_student" name="image_student" style="height: 150px">
+													<img id="image" name="image" style="height: 150px">
 												
 													
 												</div>
@@ -52,36 +52,48 @@
 											<div class="col-md-3">	
 												<div class="form-group">
 													<label style="font-size: 12px; margin-bottom: 3px">Place of Birth:</label>
-													<input type="text" id="p_o_b" name="p_o_b" class="form-control form-control-sm" placeholder="Place of Birth">
+													<input type="text" id="pob" name="pob" class="form-control form-control-sm" placeholder="Place of Birth">
 												</div>	
 											</div>
 											<div class="col-md-3">	
 												<div class="form-group">
 													<label style="font-size: 12px; margin-bottom: 3px">Date of Birth:</label>
-													<input type="date" id="d_o_b"  name="d_o_b" class="form-control form-control-sm" placeholder="Date of Birth">
+													<input type="date" id="dob"  name="dob" class="form-control form-control-sm" placeholder="Date of Birth">
 												</div>
 											</div> 
 
-									<div class="col-md-3">		
-										<div class="form-group">
-											<label style="font-size: 12px; margin-bottom: 3px">Mother Name:</label>
-											<input type="text" id="mother_name" name="mother_name" class="form-control form-control-sm" placeholder="Mother Name">
-										</div>
-									</div> 
-									<div class="col-md-3">									
-												<div class="form-group">
-													<label style="font-size: 12px; margin-bottom: 3px">NIK:</label>
-													<input type="text" id="ic_passport" name="ic_passport" class="form-control form-control-sm" placeholder="NIK">
-												</div>											
-											</div>
+								 
 
 
 
 
-
-									<div class="col-md-12">
+											<div class="col-md-12">
 										<div class="row">
-										
+ 
+
+
+													<div class="col-md-3">
+							                            <label>Country</label>
+							                            <select name="country"  class="custom-select">
+							                                <?=dd_menu('region', 'id_wil', 'nm_wil','-- Please Choos --', 'WHERE id_level_wil=0' ,'ASC', $profile['country'])?>
+							                            </select>
+													</div>
+													<div class="col-md-3">
+														<label>State/Province</label>
+							                            <select name="state"  class="custom-select">
+							                                <?=dd_menu('region', 'id_wil', 'nm_wil','-- Please Choos --', 'WHERE id_level_wil=1' ,'ASC', $profile['state'])?>
+							                            </select> 
+													</div>
+													<div class="col-md-3">
+														<label>City</label>
+							                            <select name="city"  class="custom-select">
+							                                <?=dd_menu('region', 'id_wil', 'nm_wil','-- Please Choos --', 'WHERE id_level_wil=2' ,'ASC', $profile['city'])?>
+							                            </select>
+
+													</div>
+
+
+
 											
 											<div class="col-md-3">									
 												<div class="form-group">
@@ -93,6 +105,7 @@
 											
 										</div>
 									</div>
+
 
 
 									<div class="col-md-12">
@@ -136,21 +149,7 @@
 
 
 
-											<div class="col-md-3">									
-												<div class="form-group">
-													<label style="font-size: 12px; margin-bottom: 3px">Matric No:</label>
-													<input type="text" id="matrix_no" name="matrix_no" class="form-control form-control-sm" placeholder="Matric No" readonly> 
-												</div>
-											</div>
-											<div class="col-md-3">									
-												<div class="form-group">
-													<label style="font-size: 12px; margin-bottom: 3px">NIM:</label>
-													<input type="text" id="rel_mat_no" name="rel_mat_no" class="form-control form-control-sm" placeholder="NIM" readonly>
-												</div>											
-											</div>
-
-
- 
+								
 
 
 

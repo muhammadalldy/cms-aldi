@@ -22,6 +22,8 @@ if(isset($_POST["action"]) && $_POST["action"]=="submit_profile"){
 			   name='".addslashes($_POST['name'])."', 
 			   address='".addslashes($_POST['address'])."',
 			   city='".addslashes($_POST['city'])."',
+			   pob='".addslashes($_POST['pob'])."',
+			   dob='".addslashes($_POST['dob'])."',
 			   state='".addslashes($_POST['state'])."',
 			   country='".addslashes($_POST['country'])."',
 			   email='".addslashes($_POST['email'])."',
@@ -323,6 +325,8 @@ $sql = "
 	p.email,
 	p.phone,
 	p.zip_code,
+	p.pob,
+	p.dob,
 	f.approval_status
 	FROM users ua
 	LEFT JOIN profile p ON p.id_user = ua.id
@@ -864,19 +868,19 @@ $profile = $db->query($sql)->fetchArray();
 													<div class="col-lg-4">
 							                            <label>Country</label>
 							                            <select name="country"  class="custom-select">
-							                                <?=dd_menu('region', 'id_wil', 'nm_wil', 'WHERE id_level_wil=0' ,'ASC', $profile['country'])?>
+							                                <?=dd_menu('region', 'id_wil', 'nm_wil','-- Please Choos --', 'WHERE id_level_wil=0' ,'ASC', $profile['country'])?>
 							                            </select>
 													</div>
 													<div class="col-lg-4">
 														<label>State/Province</label>
 							                            <select name="state"  class="custom-select">
-							                                <?=dd_menu('region', 'id_wil', 'nm_wil', 'WHERE id_level_wil=1' ,'ASC', $profile['state'])?>
+							                                <?=dd_menu('region', 'id_wil', 'nm_wil','-- Please Choos --', 'WHERE id_level_wil=1' ,'ASC', $profile['state'])?>
 							                            </select> 
 													</div>
 													<div class="col-lg-4">
 														<label>City</label>
 							                            <select name="city"  class="custom-select">
-							                                <?=dd_menu('region', 'id_wil', 'nm_wil', 'WHERE id_level_wil=2' ,'ASC', $profile['city'])?>
+							                                <?=dd_menu('region', 'id_wil', 'nm_wil','-- Please Choos --', 'WHERE id_level_wil=2' ,'ASC', $profile['city'])?>
 							                            </select>
 
 													</div>
@@ -884,6 +888,52 @@ $profile = $db->query($sql)->fetchArray();
 
 												</div>
 											</div>
+
+
+
+
+
+
+
+											<div class="form-group">
+												<div class="row">
+
+
+
+
+											<div class="col-md-6">	
+												<div class="form-group">
+													<label style="font-size: 12px; margin-bottom: 3px">Place of Birth:</label>
+													<input type="text" id="pob" name="pob" class="form-control form-control-sm" placeholder="Place of Birth" value="<?=$profile['pob'];?>">
+												</div>	
+											</div>
+											<div class="col-md-6">	
+												<div class="form-group">
+													<label style="font-size: 12px; margin-bottom: 3px">Date of Birth:</label>
+													<input type="date" id="dob"  name="dob" class="form-control form-control-sm" placeholder="Date of Birth" value="<?=$profile['dob'];?>">
+												</div>
+											</div> 
+
+												</div>
+											</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 											<div class="form-group">
 												<div class="row">
