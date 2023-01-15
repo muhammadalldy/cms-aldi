@@ -49,13 +49,13 @@
 													<input type="text" id="name" name="name" class="form-control form-control-sm" placeholder="Name"> 
 												</div>
 											</div>
-											<div class="col-md-3">	
+											<div class="col-md-2">	
 												<div class="form-group">
 													<label style="font-size: 12px; margin-bottom: 3px">Place of Birth:</label>
 													<input type="text" id="pob" name="pob" class="form-control form-control-sm" placeholder="Place of Birth">
 												</div>	
 											</div>
-											<div class="col-md-3">	
+											<div class="col-md-2">	
 												<div class="form-group">
 													<label style="font-size: 12px; margin-bottom: 3px">Date of Birth:</label>
 													<input type="date" id="dob"  name="dob" class="form-control form-control-sm" placeholder="Date of Birth">
@@ -63,7 +63,12 @@
 											</div> 
 
 								 
-
+											<div class="col-md-2">
+							                            <label style="font-size: 12px; margin-bottom: 3px">Country</label>
+							                            <select id="country"  name="country"   class="form-control form-control-sm" >
+							                                <?=dd_menu('region', 'id_wil', 'nm_wil','-- Please Choose --', 'WHERE id_level_wil=0' ,'ASC', $profile['country'])?>
+							                            </select>
+													</div>
 
 
 
@@ -72,37 +77,33 @@
  
 
 
+
 													<div class="col-md-3">
-							                            <label>Country</label>
-							                            <select name="country"  class="custom-select">
-							                                <?=dd_menu('region', 'id_wil', 'nm_wil','-- Please Choos --', 'WHERE id_level_wil=0' ,'ASC', $profile['country'])?>
-							                            </select>
-													</div>
-													<div class="col-md-3">
-														<label>State/Province</label>
-							                            <select name="state"  class="custom-select">
-							                                <?=dd_menu('region', 'id_wil', 'nm_wil','-- Please Choos --', 'WHERE id_level_wil=1' ,'ASC', $profile['state'])?>
+														<label style="font-size: 12px; margin-bottom: 3px">State/Province</label>
+							                            <select id="state" name="state"   class="form-control form-control-sm" >
+							                                <?=dd_menu('region', 'id_wil', 'nm_wil','-- Please Choose --', 'WHERE id_level_wil=1' ,'ASC', $profile['state'])?>
 							                            </select> 
 													</div>
 													<div class="col-md-3">
-														<label>City</label>
-							                            <select name="city"  class="custom-select">
-							                                <?=dd_menu('region', 'id_wil', 'nm_wil','-- Please Choos --', 'WHERE id_level_wil=2' ,'ASC', $profile['city'])?>
+														<label style="font-size: 12px; margin-bottom: 3px">City</label>
+							                            <select id="city" name="city"  class="form-control form-control-sm" >
+							                                <?=dd_menu('region', 'id_wil', 'nm_wil','-- Please Choose --', 'WHERE id_level_wil=2' ,'ASC', $profile['city'])?>
 							                            </select>
 
 													</div>
 
-
-
-											
-											<div class="col-md-3">									
-												<div class="form-group">
-													<label style="font-size: 12px; margin-bottom: 3px">Sub District <i>(Kelurahan)</i>: <i style="font-size: 10px">	</i></label>
-													<input type="text" name="txt05_sub_district_b" value="<?=$data['sub_district_b']?>" class="form-control form-control-sm" placeholder="Sub District" <?=($_SESSION['userrole'] == '805' ? "required" : "");?> >
-												</div>
-
-											</div>											
-											
+													<div class="col-md-3">
+														<label style="font-size: 12px; margin-bottom: 3px">District</label>
+							                            <select id="district" name="district"  class="form-control form-control-sm" >
+							                                <?=dd_menu('region', 'id_wil', 'nm_wil','-- Please Choose --', 'WHERE id_level_wil=3' ,'ASC', $profile['district'])?>
+							                            </select>
+													</div>
+													<div class="col-md-3">									
+														<div class="form-group">
+															<label style="font-size: 12px; margin-bottom: 3px">Sub District <i>(Kelurahan)</i>: <i style="font-size: 10px">	</i></label>
+															<input id="sub_district" type="text" name="sub_district" value="<?=$data['sub_district']?>" class="form-control form-control-sm" placeholder="Sub District" >
+														</div>
+													</div>											
 										</div>
 									</div>
 
@@ -113,13 +114,13 @@
 											<div class="col-md-6">									
 												<div class="form-group">
 													<label style="font-size: 12px; margin-bottom: 3px">Address <i style="font-size: 10px">(Sesuai KTP)</i>:</label> 
-													<input type="text" id="address_aa" name="address_aa" class="form-control form-control-sm" placeholder="Address"> 
+													<input type="text" id="address_ic" name="address_ic" class="form-control form-control-sm" placeholder="Address"> 
 												</div>
 											</div>											 
 											<div class="col-md-6">									
 												<div class="form-group">
 													<label style="font-size: 12px; margin-bottom: 3px">Address <i style="font-size: 10px">(Alamat Saat Ini)</i>:</label>
-													<input type="text" id="address_ba" name="address_ba" class="form-control form-control-sm" placeholder="Address" >  
+													<input type="text" id="address_now" name="address_now" class="form-control form-control-sm" placeholder="Address" >  
 												</div>
 											</div>
 										</div>
@@ -133,13 +134,13 @@
 											<div class="col-md-3">									 
 												<div class="form-group">
 													<label style="font-size: 12px; margin-bottom: 3px">Email:</label> 
-													<input type="text" id="email" name="email" class="form-control form-control-sm" placeholder="Email" <?=($_SESSION['userrole'] == '805' ? "required" : "");?> >
+													<input type="text" id="email" name="email" class="form-control form-control-sm" placeholder="Email" >
 												</div>
 											</div>
 											<div class="col-md-3">									
 												<div class="form-group">
-													<label style="font-size: 12px; margin-bottom: 3px">Handphone:</label> 
-													<input type="text" id="handphone" name="handphone" class="form-control form-control-sm" placeholder="Handphone" <?=($_SESSION['userrole'] == '805' ? "required" : "");?> >
+													<label style="font-size: 12px; margin-bottom: 3px">Phone:</label> 
+													<input type="text" id="phone" name="phone" class="form-control form-control-sm" placeholder="Phone">
 												</div>
 											</div> 										
 

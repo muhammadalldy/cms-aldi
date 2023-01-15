@@ -81,10 +81,22 @@ $(document).ready(function(){
                 console.log(data);							
                     $('#username').val(data.username);  
                     $('#name').val(data.name);  
-                    $('#email').html(data.email);   
+                    $('#email').val(data.email);   
+                    $('#phone').val(data.phone);   
 
                     $('#pob').val(data.pob);   
                     $('#dob').val(data.dob);   
+
+                    $('#address_ic').val(data.address_ic);   
+                    $('#address_now').val(data.address_now);   
+
+                    $('#country').val(data.country);   
+                    $('#state').val(data.state);   
+                    $('#city').val(data.city);   
+
+
+                    $('#district').val(data.district);   
+                    $('#sub_district').val(data.sub_district);   
 
                     image = '../files/image/'+data.image;
 					console.log(image);

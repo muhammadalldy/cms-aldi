@@ -16,11 +16,11 @@ if($_GET['id'] ==''){
 if(isset($_POST["action"]) && $_POST["action"]=="submit_profile"){
 
 	$sql = "
-		   
 			   UPDATE profile 
 			   SET 
 			   name='".addslashes($_POST['name'])."', 
-			   address='".addslashes($_POST['address'])."',
+			   address_ic='".addslashes($_POST['address_ic'])."',
+			   address_now='".addslashes($_POST['address_now'])."',
 			   city='".addslashes($_POST['city'])."',
 			   pob='".addslashes($_POST['pob'])."',
 			   dob='".addslashes($_POST['dob'])."',
@@ -28,6 +28,8 @@ if(isset($_POST["action"]) && $_POST["action"]=="submit_profile"){
 			   country='".addslashes($_POST['country'])."',
 			   email='".addslashes($_POST['email'])."',
 			   phone='".addslashes($_POST['phone'])."',
+			   district='".addslashes($_POST['district'])."',
+			   sub_district='".addslashes($_POST['sub_district'])."',
 			   zip_code='".addslashes($_POST['zip_code'])."'
 			   WHERE id_user='".$_SESSION['id_user']."'
 		   "; 
@@ -318,7 +320,8 @@ $sql = "
 	ua.cover,	
 	p.name,
 	p.bio,
-	p.address,
+	p.address_ic,
+	p.address_now,
 	p.city,
 	p.state,
 	p.country,
@@ -327,6 +330,8 @@ $sql = "
 	p.zip_code,
 	p.pob,
 	p.dob,
+	p.district,
+	p.sub_district,
 	f.approval_status
 	FROM users ua
 	LEFT JOIN profile p ON p.id_user = ua.id
@@ -848,76 +853,75 @@ $profile = $db->query($sql)->fetchArray();
 											<input type="hidden" name="action" value="submit_profile"> 
 											<div class="form-group">
 												<div class="row">
+
 													<div class="col-lg-6">
-														<label>Username</label>
-														<input type="text" name="username" value="<?=$profile['username'];?>" class="form-control">
-													</div>
-													<div class="col-lg-6">
-														<label>Full name </label>
-														<input type="text" name="name" value="<?=$profile['name'];?>" class="form-control">
-													</div>
-												</div>
-											</div>
-
-
-
-											<div class="form-group">
-												<div class="row">
-
-
-													<div class="col-lg-4">
-							                            <label>Country</label>
-							                            <select name="country"  class="custom-select">
-							                                <?=dd_menu('region', 'id_wil', 'nm_wil','-- Please Choos --', 'WHERE id_level_wil=0' ,'ASC', $profile['country'])?>
-							                            </select>
-													</div>
-													<div class="col-lg-4">
-														<label>State/Province</label>
-							                            <select name="state"  class="custom-select">
-							                                <?=dd_menu('region', 'id_wil', 'nm_wil','-- Please Choos --', 'WHERE id_level_wil=1' ,'ASC', $profile['state'])?>
-							                            </select> 
-													</div>
-													<div class="col-lg-4">
-														<label>City</label>
-							                            <select name="city"  class="custom-select">
-							                                <?=dd_menu('region', 'id_wil', 'nm_wil','-- Please Choos --', 'WHERE id_level_wil=2' ,'ASC', $profile['city'])?>
-							                            </select>
-
+														<label style="font-size: 12px; margin-bottom: 3px">Name </label>
+														<input type="text" name="name" value="<?=$profile['name'];?>" class="form-control form-control-sm"">
 													</div>
 
 
-												</div>
-											</div>
-
-
-
-
-
-
-
-											<div class="form-group">
-												<div class="row">
-
-
-
-
-											<div class="col-md-6">	
+											<div class="col-md-2">	
 												<div class="form-group">
 													<label style="font-size: 12px; margin-bottom: 3px">Place of Birth:</label>
 													<input type="text" id="pob" name="pob" class="form-control form-control-sm" placeholder="Place of Birth" value="<?=$profile['pob'];?>">
 												</div>	
 											</div>
-											<div class="col-md-6">	
+											<div class="col-md-2">	
 												<div class="form-group">
 													<label style="font-size: 12px; margin-bottom: 3px">Date of Birth:</label>
 													<input type="date" id="dob"  name="dob" class="form-control form-control-sm" placeholder="Date of Birth" value="<?=$profile['dob'];?>">
 												</div>
 											</div> 
 
+											<div class="col-md-2">
+							                            <label style="font-size: 12px; margin-bottom: 3px">Country</label>
+							                            <select name="country"  class="form-control form-control-sm">
+							                                <?=dd_menu('region', 'id_wil', 'nm_wil','-- Please Choose --', 'WHERE id_level_wil=0' ,'ASC', $profile['country'])?>
+							                            </select>
+													</div>
+
 												</div>
 											</div>
 
 
+
+											<div class="form-group">
+												<div class="row">
+
+
+
+													<div class="col-lg-3">
+														<label style="font-size: 12px; margin-bottom: 3px">State/Province</label>
+							                            <select name="state"  class="form-control form-control-sm">
+							                                <?=dd_menu('region', 'id_wil', 'nm_wil','-- Please Choose --', 'WHERE id_level_wil=1' ,'ASC', $profile['state'])?>
+							                            </select> 
+													</div>
+													<div class="col-lg-3">
+														<label style="font-size: 12px; margin-bottom: 3px">City</label>
+							                            <select name="city"  class="form-control form-control-sm">
+							                                <?=dd_menu('region', 'id_wil', 'nm_wil','-- Please Choose --', 'WHERE id_level_wil=2' ,'ASC', $profile['city'])?>
+							                            </select>
+													</div>
+													<div class="col-lg-3">
+														<label style="font-size: 12px; margin-bottom: 3px">District</label>
+							                            <select name="district"  class="form-control form-control-sm">
+							                                <?=dd_menu('region', 'id_wil', 'nm_wil','-- Please Choose --', 'WHERE id_level_wil=3' ,'ASC', $profile['district'])?>
+							                            </select>
+													</div>
+													<div class="col-md-3">									
+														<div class="form-group">
+															<label style="font-size: 12px; margin-bottom: 3px">Sub District <i>(Kelurahan)</i>: <i style="font-size: 10px">	</i></label>
+															<input type="text" name="sub_district" value="<?=$profile['sub_district']?>" class="form-control form-control-sm" placeholder="Sub District" >
+														</div>
+													</div>	
+
+												</div>
+											</div>
+
+
+
+
+ 
 
 
 
@@ -937,9 +941,21 @@ $profile = $db->query($sql)->fetchArray();
 
 											<div class="form-group">
 												<div class="row">
-													<div class="col-lg-12">
-														<label>Address line</label>
-														<input type="text" name="address" value="<?=$profile['address'];?>" class="form-control">
+													<div class="col-md-12">
+														<div class="row">
+															<div class="col-md-6">									
+																<div class="form-group">
+																	<label style="font-size: 12px; margin-bottom: 3px">Address <i style="font-size: 10px">(Sesuai KTP)</i>:</label> 
+																	<input type="text" id="address_ic" name="address_ic"  value="<?=$profile['address_ic'];?>"  class="form-control form-control-sm" placeholder="Address"> 
+																</div>
+															</div>											 
+															<div class="col-md-6">									
+																<div class="form-group">
+																	<label style="font-size: 12px; margin-bottom: 3px">Address <i style="font-size: 10px">(Alamat Saat Ini)</i>:</label>
+																	<input type="text" id="address_now" name="address_now"  value="<?=$profile['address_now'];?>"  class="form-control form-control-sm" placeholder="Address" >  
+																</div>
+															</div>
+														</div>
 													</div>
 												</div>
 											</div>
@@ -947,12 +963,12 @@ $profile = $db->query($sql)->fetchArray();
 											<div class="form-group">
 												<div class="row">
 													<div class="col-lg-6">
-														<label>Email</label>
-														<input type="text" name="email" value="<?=$profile['email'];?>"  class="form-control">
+														<label style="font-size: 12px; margin-bottom: 3px">Email</label>
+														<input type="text" name="email" value="<?=$profile['email'];?>"  class="form-control form-control-sm">
 													</div>
 													<div class="col-lg-6">
-														<label>ZIP code</label>
-														<input type="text" name="zip_code" value="<?=$profile['zip_code'];?>" class="form-control">
+														<label style="font-size: 12px; margin-bottom: 3px">ZIP code</label>
+														<input type="text" name="zip_code" value="<?=$profile['zip_code'];?>" class="form-control form-control-sm">
 													</div>
 												</div>
 											</div>
@@ -960,13 +976,13 @@ $profile = $db->query($sql)->fetchArray();
 					                        <div class="form-group">
 					                        	<div class="row">
 					                        		<div class="col-lg-6">
-														<label>Phone #</label>
-														<input type="text" name="phone" value="<?=$profile['phone'];?>" class="form-control">
+														<label style="font-size: 12px; margin-bottom: 3px">Phone #</label>
+														<input type="text" name="phone" value="<?=$profile['phone'];?>" class="form-control form-control-sm">
 														<span class="form-text text-muted">+99-99-9999-9999</span>
 					                        		</div>
 
 													<div class="col-lg-6">
-														<label>Upload profile image</label>
+														<label style="font-size: 12px; margin-bottom: 3px">Upload profile image</label>
 														<div class="custom-file">
 															<input type="file"  name="image"  class="custom-file-input" id="customFile">
 															<label class="custom-file-label" for="customFile">Choose file</label>
