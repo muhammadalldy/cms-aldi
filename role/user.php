@@ -59,7 +59,7 @@ if(isset($_POST["action"]) && $_POST["action"]=="delete"){
 								<div class="card-header header-elements-inline">
 									<h5 class="card-title"><?=ucfirst($title)?></h5>
 									<div class="header-elements">
-										<a href="index.php" class="btn btn-sm btn-primary">Back</a>
+										<a href="index.php" class="badge ml-2" style="background: #2980b9; color: #fff; font-size: 10px">Back</a>
 									</div>
 								</div>
 								<div class="card-body">
@@ -77,19 +77,18 @@ if(isset($_POST["action"]) && $_POST["action"]=="delete"){
 										<tbody>
 											<?php
 												$sql = "
-													SELECT ne.empid, ne.name, es.title as user_status, ur.role
+													SELECT ne.id_user as id, ne.name, ur.name as role
 													FROM profile ne 
-													LEFT JOIN employee_status es ON es.code = ne.xemployee_status
-													LEFT JOIN users ua ON ua.username = ne.empid
-													LEFT JOIN roles ur ON ur.id = ua.id_role
+													LEFT JOIN users ua ON ua.id = ne.id_user
+													LEFT JOIN role ur ON ur.id = ua.id_role
                                                     WHERE ua.id_role='".$_GET['id']."'
-													AND ne.xemployee_status='AC'
+
 												";
 												$menus = $db->query($sql)->fetchAll();
 											?>	
 											<?php foreach($menus as $menu){ ?>										
 												<tr>
-													<td><?=$menu['empid']?></td>
+													<td><?=$menu['id']?></td>
 													<td><?=$menu['name']?></td> 
 													<td><?=$menu['role']?></td> 
 													<td><?=$menu['user_status']?></td> 

@@ -141,7 +141,7 @@ $(document).ready(function(){
 						pic = row.image;						
 					}
 					<?php if($_SESSION['userrole'] !='900'){?>
-					return '<a id="'+row.id+'" href="profile.php?id='+row.id+'"  >'+data+'</a>';
+					return '<a id="'+row.id+'" href="../profile/index.php?id='+row.id+'"  >'+data+'</a>';
 					<?php } else {?>
 					return data;
 					<?php } ?>

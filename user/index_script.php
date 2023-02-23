@@ -22,7 +22,7 @@ $(document).ready(function(){
 	        { data: 'name' }, 
 	        { data: 'name' }, 
 	        { data: 'role' }, 
-			{ data: null, title: '', wrap: true, "render": function (item) { return '<a data-popup="tooltip" title="Student Score" target="_blank" href="grade.php?id=' + item.id + '" class="badge"  style="background: #2980b9; color: #fff"><i class="icon-stats-bars2 "></i></a>' } }, 
+	        { data: 'created_date', width: '200px' }, 
         ],
         columnDefs: [
             {
@@ -79,10 +79,12 @@ $(document).ready(function(){
             dataType:"json",  
             success:function(data){ 	
                 console.log(data);							
+                    $('#id_user').val(data.id_user);  
                     $('#username').val(data.username);  
                     $('#name').val(data.name);  
                     $('#email').val(data.email);   
                     $('#phone').val(data.phone);   
+                    $('#zip_code').val(data.zip_code);   
 
                     $('#pob').val(data.pob);   
                     $('#dob').val(data.dob);   
@@ -106,7 +108,62 @@ $(document).ready(function(){
 
             }  
         });  
-    }); 	 
+    }); 
+    
+    
+
+
+
+
+
+
+    $('#update_form').on("submit", function(event){  
+           event.preventDefault();  
+           if($('#name').val() == "")  
+           {  
+                alert("Name is required");  
+           }  
+           else if($('#address').val() == '')  
+           {  
+                alert("Address is required");  
+           }  
+           else if($('#designation').val() == '')  
+           {  
+                alert("Designation is required");  
+           }  
+           else if($('#age').val() == '')  
+           {  
+                alert("Age is required");  
+           }  
+           else  
+           {  
+                $.ajax({  
+                     url:"index_modal_update.php",  
+                     method:"POST",  
+                     data:$('#update_form').serialize(),  
+                     beforeSend:function(){  
+                          //$('#insert').val("Inserting");  
+                     },  
+                     success:function(data){  
+                        $('.toast').toast('show');
+                        console.log(data);
+                          //$('#update_form')[0].reset();  
+                        $('#modal_large').modal('hide');  
+                        $('#dataTable').DataTable().ajax.reload();
+                         // $('#employee_table').html(data);  
+                     }  
+                });  
+           }  
+      });  
+
+
+
+
+
+
+
+
+
 });
 
 

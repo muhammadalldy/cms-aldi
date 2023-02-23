@@ -123,7 +123,7 @@ if(isset($_POST["action"]) && $_POST["action"]=="submit"){
 		$filename = $filename[0];
 		$filename = $filename."_".$date2;
 		$filename = $filename.".".$ext;
-		$target_dir = "../announcement/img/";
+		$target_dir = "../files/posting/";
 		$target_file = $target_dir . $filename;
 		$uploadOk = 1;
 		$imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
@@ -136,27 +136,7 @@ if(isset($_POST["action"]) && $_POST["action"]=="submit"){
 			$db->query($sql);
 		} else {
 
-
-
-	$sql = "
-		SELECT ne.empid AS userid, lower(ne.name) as name, ne.image_staff as image, ne.back_title
-		FROM `new_employee` ne
-		WHERE ne.empid='".$_SESSION['username']."'
-	";
-	$datas = $db->query($sql)->fetchArray();
-	$sender_name = ucwords($datas['name']).", ".$datas['back_title'];
-
  
-	$sql = "
-		SELECT lower(s.name) as name, s.email 
-		FROM  `student` s
-		LEFT JOIN student_program sp ON sp.matrix_no = s.matrix_no
-		WHERE s.student_status='ACTIVE' 
-		AND s.email !='' AND s.email IS NOT NULL
-	";
-	
-	$allstudent = $db->query($sql)->fetchAll();
-  
 			move_uploaded_file($_FILES["img"]["tmp_name"], $target_file);
 			$sql	 		= "UPDATE posting SET 
 								img = '$filename',
@@ -200,6 +180,16 @@ if(isset($_POST["action"]) && $_POST["action"]=="submit"){
 
 
  
+
+if (isset($_POST["action"]) && $_POST["action"]=="delete_feed") {
+    $created_date = date("Y-m-d H:i:s");
+    $date_id = date("YmdHis");
+    $sql = "
+			   DELETE FROM posting WHERE id='".$_POST['id_feed']."'
+		   ";
+    $db->query($sql);
+	echo("<script>window.location.href = '../home/'; </script>");
+}
  
 
 
@@ -278,7 +268,7 @@ $sql = "
 					<div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline">
 						<div class="d-flex">
 							<div class="breadcrumb">
-								<a href="#" class="breadcrumb-item active">Announcement</a>
+								<a href="#" class="breadcrumb-item active">Home</a>
 							</div>
 
 							<a href="#" class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
@@ -316,17 +306,17 @@ $sql = "
 
 								<div class="row">
 									<div class="col-lg-6">
-										<div class="card border-left-3 border-left-primary rounded-left-0">
+										<div class="card shadow-sm">
 										<!-- Share your thoughts -->
 										
 												<div class="card-header header-elements-inline" style="padding-bottom: 12px; padding-top: 12px; ">
-													<h7 class="card-title">Announcement</h7>
+													<!--h7 class="card-title">Home</h7-->
 												</div>
 
 												<div class="card-body" style="padding-bottom: 12px; padding-top: 0px; ">
 													<form action="index.php" method="post" enctype="multipart/form-data">
 														
-														<textarea id="text_area" name="content" class="form-control mb-2" rows="3" cols="1" placeholder="Enter your announcement..." ></textarea>
+														<textarea id="text_area" name="content" class="form-control mb-2" rows="3" cols="1" placeholder="What's happening?" ></textarea>
 														<input id="picture_name" type="hidden" class="form-control mb-2" placeholder="Picture" readonly>
 														
 														<input type="hidden" name="action" value="submit">
@@ -366,9 +356,11 @@ $sql = "
 							$sql = "
 
 							SELECT fc.file_extension, fc.img, fc.id, s.id_user AS userid, LOWER(s.name) AS name, 
-							fc.content, fc.created_date, u.image, '' AS back_title
+							fc.content, fc.created_date, u.image, '' AS back_title,
+							fc.id_ownership, LOWER(r.name) AS rname, r.id_user as rid
 							FROM `posting` fc 
 							LEFT JOIN `profile` s ON fc.created_by = s.id_user
+							LEFT JOIN `profile` r ON fc.id_ownership = r.id_user
 							LEFT JOIN `users` u ON u.id = s.id_user
 							WHERE fc.id_parent='0' 
 							ORDER BY fc.created_date DESC
@@ -417,12 +409,26 @@ $sql = "
 
 								<div class="row">
 									<div class="col-lg-12">
-										<div class="card border-left-3 border-left-primary rounded-left-0">
+										<!--div class="card border-left-3 border-left-primary rounded-left-0"-->
+										<div class="card shadow-sm">
+										<div class="card-header  header-elements-sm-inline" style="padding-top: 15px; padding-bottom: 5px; ">
+											<h6 style="margin: 0px">
+												<a href="../profile/index.php<?=($data['userid']!=$_SESSION['id_user'])?"?id=".$data['userid']:""?>"><?=ucwords($data['name'])?></a>
+											<?php if($data['id_ownership'] != "0" && ($data['userid'] != $data['rid'])){ ?>
+												> <a href="../profile/index.php<?=($data['rid']!=$_SESSION['id_user'])?"?id=".$data['rid']:""?>"><?=ucwords($data['rname'])?></a>
+											<?php } ?>
+											</h6>
+											<div class="header-elements">
+											<?php if($data['userid']==$_SESSION['id_user']){?> 
+												<button type="button" class="close delete_feed" id="<?=$data['id']?>" data-toggle="modal" data-target="#modal_delete_feed">×</button>
+											<?php } ?>
+											</div>
+										</div>
+
 											<div class="card-body" style="padding-bottom: 9px">
-												<!--div class="d-sm-flex align-item-sm-center flex-sm-nowrap mb-1"-->
 												<div>
 													<div>
-														<h6><a href="../profile/index.php<?=($data['userid']!=$_SESSION['id_user'])?"?id=".$data['userid']:""?>"><?=ucwords($data['name'])?></a></h6>
+
 														<p>
 														
 														<?php if($data['img'] !=''){ ?>
@@ -434,16 +440,16 @@ $sql = "
 														
 
 														?>
-														<iframe src="../announcement/img/<?=$data['img']?>" style="height: 350px;width: <?=($device == 1 ? "100%" : "75%")?>"></iframe><br/>
+														<iframe src="../files/posting/<?=$data['img']?>" style="height: 350px;width: <?=($device == 1 ? "100%" : "75%")?>"></iframe><br/>
 
 
 
-															<a href="../announcement/img/<?=$data['img']?>" > Download </a>
+															<a href="../files/posting/<?=$data['img']?>" > Download </a>
 
 														<?php 
 
 														} else { ?>
-															<img src="../announcement/img/<?=$data['img']?>" style="width: <?=($device == 1 ? "100%" : "50%")?>">
+															<img src="../files/posting/<?=$data['img']?>" style="width: <?=($device == 1 ? "100%" : "50%")?>">
 														
 														<?php } ?>
 
@@ -549,6 +555,87 @@ $sql = "
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		            <!-- Bio modal -->
+					<div id="modal_delete_feed" class="modal fade" tabindex="-1">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">Delete Feed</h5>
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+								</div>
+
+								<form action="<?=$_SERVER["PHP_SELF"]?>" method="post" enctype="multipart/form-data">
+								<input type="hidden" name="action" value="delete_feed"> 
+								<input type="hidden" id="id_feed" name="id_feed"> 
+								<div class="modal-body">
+									
+ 
+ 
+
+					                        <div class="form-group">
+					                        	<div class="row">
+
+													<div class="col-lg-12">
+														Are you sure want to delete this feed?
+													</div>
+					                        	</div>
+					                        </div>
+
+
+
+
+								</div>
+
+								<div class="modal-footer">
+									<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+									<button type="submit" class="btn btn-primary">Delete</button>
+								</div>
+
+								</form>
+							</div>
+						</div>
+					</div>
+					<!-- /basic modal -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script>
 $(function(){
 $("#upload_link").on('click', function(e){
@@ -556,6 +643,29 @@ $("#upload_link").on('click', function(e){
     $("#upload:hidden").trigger('click');
 });
 });
+
+
+
+
+
+$(document).ready(function(){
+
+
+
+
+$(document).on('click', '.delete_feed', function(){  
+
+        var id = $(this).attr("id"); 
+		console.log(id);
+		$('#id_feed').val(id);    
+    }); 	 
+    	
+});	
+
+
+
+
+
 
 function file_changed(){
 	var link = document.getElementById('picture_name');

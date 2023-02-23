@@ -75,8 +75,8 @@ if(isset($_POST["action"]) && $_POST["action"]=="delete"){
 								<div class="card-header header-elements-inline">
 									<h5 class="card-title"><?=ucwords(str_replace("_"," ",$title))?></h5>
 									<div class="header-elements">
-										<button id="some_id1" class="btn btn-sm btn-primary mr-1">Update</button>
-										<a href="index.php" class="btn btn-sm btn-primary mr-1">Back</a>
+										<button id="some_id1" class="badge ml-2" style="background: #2980b9; color: #fff; font-size: 10px">Update</button>
+										<a href="index.php" class="badge ml-2" style="background: #2980b9; color: #fff; font-size: 10px">Back</a>
 									</div>
 								</div>
 								<div class="card-body">

@@ -41,7 +41,7 @@ if($searchValue != ''){
 
 ## Total number of records without filtering
 $sel = mysqli_query($con,"select count(*) as allcount from (
-    SELECT u.id, p.name, u.image, p.email, r.name as role, r.id as id_role
+    SELECT u.id, p.name, u.image, p.email, r.name as role, r.id as id_role, u.created_date
     FROM `users` u 
     LEFT JOIN role r ON r.id = u.id_role
     LEFT JOIN `profile` p ON p.id_user = u.id
@@ -51,7 +51,7 @@ $totalRecords = $records['allcount'];
 
 ## Total number of records with filtering
 $sel = mysqli_query($con,"select count(*) as allcount from (
-    SELECT u.id, p.name, u.image, p.email, r.name as role, r.id as id_role
+    SELECT u.id, p.name, u.image, p.email, r.name as role, r.id as id_role, u.created_date
     FROM `users` u 
     LEFT JOIN role r ON r.id = u.id_role
     LEFT JOIN `profile` p ON p.id_user = u.id
@@ -61,7 +61,7 @@ $totalRecordwithFilter = $records['allcount'];
 
 ## Fetch records
 $empQuery = "select * from (
-    SELECT u.id, p.name, u.image, p.email, r.name as role, r.id as id_role
+    SELECT u.id, p.name, u.image, p.email, r.name as role, r.id as id_role, u.created_date
     FROM `users` u 
     LEFT JOIN role r ON r.id = u.id_role
     LEFT JOIN `profile` p ON p.id_user = u.id
@@ -76,6 +76,7 @@ while ($row = mysqli_fetch_assoc($empRecords)) {
         "image"=>$row['image'],
         "role"=>$row['role'],
         "email"=>$row['email'],
+        "created_date"=>$row['created_date'],
 		
     );
 }

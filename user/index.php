@@ -32,7 +32,7 @@
 								<div class="card-header header-elements-inline">
 									<h5 class="card-title" style="color: #47b1d7">
 										User
-									</h5>
+									</h5> 
 									<div class="header-elements">
 									<?php if ($_SESSION['userrole']!='900') { ?>
 									<a href="index_excel.php" target="_blank" class="badge ml-2" style="background: #2980b9; color: #fff; font-size: 10px">Export to Excel</a>
@@ -62,7 +62,7 @@
 													<th style="width: 100px;"  data-orderable="false"></th> 
 													<th style="width: 250px;" data-orderable="false">Name</th> 
 													<th data-orderable="false">Role</th> 
-													<th data-orderable="false">Email</th> 
+													<th data-orderable="false">Created Date</th> 
 												</tr>
 											</thead> 
 										</table>

@@ -1,5 +1,5 @@
 <?php
-    include('../config_klas2/lib/common.php');
+    include('../config/lib/common.php');
     require '../vendor/autoload.php';
     
 
@@ -43,42 +43,46 @@
      
 
     $sql = "
-    SELECT s.name, s.matrix_no, s.rel_mat_no, lg.title AS gender, cmp.title as campus_name, s.campus_code as campus_id, st.title as std_type,
-    lr.title AS religion_nm,
-     s.d_o_b, 
-    sp.semester_id, po.code,
-    s.student_status,
-	s.email,
-	s.p_o_b
-    FROM student s
-    LEFT JOIN student_program sp ON sp.matrix_no = s.matrix_no
-    LEFT JOIN lookup_gender lg ON lg.id = s.xgender
-    LEFT JOIN lookup_religion lr ON lr.id = s.religion
-    LEFT JOIN program p ON p.programid = sp.program_code
-    LEFT JOIN pro_off po ON p.programid = po.code 
-	LEFT JOIN lookup_campus_sttj cmp ON cmp.id = s.campus_code 
-	LEFT JOIN lookup_std_type st ON st.id = s.std_type 
-    WHERE sp.program_code NOT LIKE '%PNJ%' 
+			SELECT 
+			ua.username, 
+			ua.image,
+			ua.cover,	
+			p.name,
+			p.bio,
+			p.address_ic,
+			p.address_now,
+			p.city,
+			p.state,
+			p.country,
+			p.email,
+			p.phone,
+			p.zip_code,
+			p.pob,
+			p.dob,
+			p.district,
+			p.sub_district
+			FROM users ua
+			LEFT JOIN profile p ON p.id_user = ua.id
     ";
     $query = $db->query($sql);
       
     if($query->num_rows > 0) {
         $i = 2;
         while($row = mysqli_fetch_array($query)) {
-            $activeSheet->setCellValue('A'.$i , $row['name']);
-            $activeSheet->setCellValue('B'.$i , $row['matrix_no']);
-            $activeSheet->setCellValue('C'.$i , $row['rel_mat_no']);
-            $activeSheet->setCellValue('D'.$i , $row['gender']);
-            $activeSheet->setCellValue('E'.$i , $row['campus_name']);
-            $activeSheet->setCellValue('F'.$i , $row['campus_id']);
-            $activeSheet->setCellValue('G'.$i , $row['religion_nm']);
-            $activeSheet->setCellValue('H'.$i , $row['d_o_b']);
-            $activeSheet->setCellValue('I'.$i , $row['semester_id']);
-            $activeSheet->setCellValue('J'.$i , $row['code']);
-            $activeSheet->setCellValue('K'.$i , $row['student_status']);
-            $activeSheet->setCellValue('L'.$i , $row['std_type']);
-            $activeSheet->setCellValue('M'.$i , $row['email']);
-            $activeSheet->setCellValue('M'.$i , $row['p_o_b']);
+            $activeSheet->setCellValue('A'.$i , $row['username']);
+            $activeSheet->setCellValue('B'.$i , $row['name']);
+            $activeSheet->setCellValue('C'.$i , $row['country']);
+            $activeSheet->setCellValue('D'.$i , $row['state']);
+            $activeSheet->setCellValue('E'.$i , $row['city']);
+            $activeSheet->setCellValue('F'.$i , $row['district']);
+            $activeSheet->setCellValue('G'.$i , $row['sub_district']);
+            $activeSheet->setCellValue('H'.$i , $row['pob']);
+            $activeSheet->setCellValue('I'.$i , $row['dob']);
+            $activeSheet->setCellValue('J'.$i , $row['email']);
+            $activeSheet->setCellValue('K'.$i , $row['phone']);
+            $activeSheet->setCellValue('L'.$i , $row['address_ic']);
+            $activeSheet->setCellValue('M'.$i , $row['address_now']);
+            $activeSheet->setCellValue('N'.$i , $row['bio']);
             $i++; 
         }
     }

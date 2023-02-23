@@ -1,2 +1,4 @@
 /config/lib/dbconfig.php
 /files/global_assets/*
+
+/vendor/

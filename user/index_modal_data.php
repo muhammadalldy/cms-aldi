@@ -3,8 +3,9 @@
 	include('../config/lib/common.php');
 	$id = $_POST["id"];
 	$sql = "
-			SELECT u.username, u.id, p.name, p.email, u.image, p.phone,
+			SELECT u.username, u.id, u.id as id_user, p.name, p.email, u.image, p.phone,
 			p.pob, p.dob,
+			p.zip_code, 
 			p.country, 
 			p.state,
 			p.district,
@@ -20,6 +21,7 @@
 			";
 	$result = $db->query($sql);
 	$rows_all = $result->fetchArray();
+	$output['id_user'] 	= $rows_all['id_user']; 
 	
 	$output['username'] 	= $rows_all['username']; 
 	$output['name'] 		= $rows_all['name'];
@@ -27,6 +29,7 @@
 	$output['phone'] 		= $rows_all['phone'];
 	$output['image'] 		= $rows_all['image'];
 
+	$output['zip_code'] 		= $rows_all['zip_code'];
 	$output['pob'] 		= $rows_all['pob'];
 	$output['dob'] 		= $rows_all['dob'];
 

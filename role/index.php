@@ -56,9 +56,10 @@ if(isset($_POST["action"]) && $_POST["action"]=="delete"){
 							<!-- Basic datatable -->
 							<div class="card">
 							
-								<div class="card-header header-elements-inline">
-									<h5 class="card-title"><?=ucwords(str_replace("_"," ",$title))?></h5>
-									
+								<div class="card-header header-elements-inline"> 
+									<h5 class="card-title" style="color: #47b1d7">
+										Role
+									</h5> 
 								</div>
 								<div class="card-body">
 								
@@ -75,8 +76,8 @@ if(isset($_POST["action"]) && $_POST["action"]=="delete"){
 										<tbody>
 											<?php
 												$sql = "
-												SELECT ur.id, ur.role, COUNT(bml.menu_id) AS total_menu
-												FROM roles ur
+												SELECT ur.id, ur.name as role, COUNT(bml.menu_id) AS total_menu
+												FROM role ur
 												LEFT JOIN `menu_role` bml ON ur.id = bml.role_id
 												LEFT JOIN `menu` bm ON bm.id = bml.menu_id
 												GROUP BY ur.id												";

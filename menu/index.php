@@ -73,7 +73,9 @@ if(isset($_POST["action"]) && $_POST["action"]=="delete"){
 								<div class="card-header header-elements-inline">
 								<h5 class="card-title" style="color: #47b1d7"><?=ucwords(str_replace("_"," ",$title))?></h5>
 									<div class="header-elements">
-									<a href="add.php" class="btn btn-sm btn-primary">Add Data</a>
+									<a href="add.php" class="badge ml-2" style="background: #2980b9; color: #fff; font-size: 10px">Add Data</a>
+ 	
+
 									</div>
 								</div>
 								<div class="card-body">
@@ -143,7 +145,7 @@ if(isset($_POST["action"]) && $_POST["action"]=="delete"){
 
 
 
-
+ 
 				</div>
 				<!-- /content area -->
 
@@ -163,10 +165,12 @@ if(isset($_POST["action"]) && $_POST["action"]=="delete"){
 
 $(document).ready(function(){
     var dataTable = $('#dataTable').DataTable({
-        'pageLength' : 10,
-	 
+        'pageLength' : 10, 
 		"info": false, 
+ 
         'searching': false, 
+
+ 
 	    "language": { processing: '<i class="icon-spinner2 spinner"></i><span class="sr-only">Loading...</span> '},		
 		 
 		  "scrollY": "340px",

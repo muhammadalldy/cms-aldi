@@ -6,16 +6,15 @@
 $dtold = "";
 
 echo("");
-if($_GET['id'] ==''){
-	$_GET['id'] = $_SESSION['id_user']; 
-	$is_editable = 1;
+if ($_GET['id'] =='') {
+    $_GET['id'] = $_SESSION['id_user'];
+    $is_editable = 1;
 } else {
-	$is_editable = 0;
+    $is_editable = 0;
 }
- 
-if(isset($_POST["action"]) && $_POST["action"]=="submit_profile"){
 
-	$sql = "
+if (isset($_POST["action"]) && $_POST["action"]=="submit_profile") {
+    $sql = "
 			   UPDATE profile 
 			   SET 
 			   name='".addslashes($_POST['name'])."', 
@@ -32,56 +31,49 @@ if(isset($_POST["action"]) && $_POST["action"]=="submit_profile"){
 			   sub_district='".addslashes($_POST['sub_district'])."',
 			   zip_code='".addslashes($_POST['zip_code'])."'
 			   WHERE id_user='".$_SESSION['id_user']."'
-		   "; 
-   $db->query($sql);
+		   ";
+    $db->query($sql);
+    $sql = "
+	UPDATE 
+	users 
+	SET 
+	username='".addslashes($_POST['username'])."'
+	WHERE id='".$_SESSION['id_user']."'
+	";
+
+    $db->query($sql);
+    $_SESSION['username'] = addslashes($_POST['username']);
 
 
 
-$sql = "
-   UPDATE 
-   users 
-   SET 
-   username='".addslashes($_POST['username'])."'
-   WHERE id='".$_SESSION['id_user']."'
-";
+    $image_size = $_FILES['image']['size'];
+    if ($image_size > 0) {
+        //$date2 = date_format(Carbon::now(), "Ymd");
+        $date2       = date("YmdHis");
 
-$db->query($sql);
+        $filename = (basename($_FILES["image"]["name"]));
+        $filename = explode(".", $filename);
+        $ext 	  = $filename[1];
+        $filename = $filename[0];
+        $filename = $filename."_".$date2;
+        $filename = $filename.".".$ext;
+        $target_dir = "../files/image/";
+        $target_file = $target_dir . $filename;
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-	$_SESSION['username'] = addslashes($_POST['username']);
-
-
-
-   $image_size = $_FILES['image']['size'];
-   if ($image_size > 0) {
-
-
-	   //$date2 = date_format(Carbon::now(), "Ymd");
-	   $date2       = date("YmdHis");
-	
-	   $filename = (basename($_FILES["image"]["name"]));
-	   $filename = explode(".", $filename);
-	   $ext 	  = $filename[1];
-	   $filename = $filename[0];
-	   $filename = $filename."_".$date2;
-	   $filename = $filename.".".$ext;
-	   $target_dir = "../files/image/";
-	   $target_file = $target_dir . $filename;
-	   $uploadOk = 1;
-	   $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-	   
-	   if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-	   && $imageFileType != "gif") {
-		   echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-		   $uploadOk = 0;
-	   } else {
-		   move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
-		   $sql	 		= "UPDATE users SET 
+        if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+        && $imageFileType != "gif") {
+            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            $uploadOk = 0;
+        } else {
+            move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+            $sql	 		= "UPDATE users SET 
 							   image = '$filename'
 							   WHERE id='".$_SESSION['id_user']."'";
-		   $db->query($sql);
-	   }
-   }
-   
+            $db->query($sql);
+        }
+    }
 
 
 
@@ -93,14 +85,14 @@ $db->query($sql);
 
 
 
-   echo("<script>window.location.href = '../profile'; </script>");
+
+    echo("<script>window.location.href = '../profile'; </script>");
 }
 
- 
 
-if(isset($_POST["action"]) && $_POST["action"]=="submit_account"){
 
-	$sql = "
+if (isset($_POST["action"]) && $_POST["action"]=="submit_account") {
+    $sql = "
 			   UPDATE 
 			   users 
 			   SET 
@@ -111,14 +103,13 @@ if(isset($_POST["action"]) && $_POST["action"]=="submit_account"){
 
 
 
-  $db->query($sql);
-  echo("<script>window.location.href = '../profile'; </script>");
+    $db->query($sql);
+    echo("<script>window.location.href = '../profile'; </script>");
 }
 
 
-if(isset($_POST["action"]) && $_POST["action"]=="submit_bio"){
-
-	 $sql = "
+if (isset($_POST["action"]) && $_POST["action"]=="submit_bio") {
+    $sql = "
 			   UPDATE 
 			   profile 
 			   SET 
@@ -128,54 +119,46 @@ if(isset($_POST["action"]) && $_POST["action"]=="submit_bio"){
 
 
 
-  $db->query($sql);
-   echo("<script>window.location.href = '../profile'; </script>");
+    $db->query($sql);
+    echo("<script>window.location.href = '../profile'; </script>");
 }
 
 
 
 
 
-if(isset($_POST["action"]) && $_POST["action"]=="submit_cover"){
+if (isset($_POST["action"]) && $_POST["action"]=="submit_cover") {
+    $image_size = $_FILES['cover']['size'];
+    if ($image_size > 0) {
+        //$date2 = date_format(Carbon::now(), "Ymd");
+        $date2       = date("YmdHis");
 
+        $filename = (basename($_FILES["cover"]["name"]));
+        $filename = explode(".", $filename);
+        $ext 	  = $filename[1];
+        $filename = $filename[0];
+        $filename = $filename."_".$date2;
+        $filename = $filename.".".$ext;
+        $target_dir = "../files/cover/";
+        $target_file = $target_dir . $filename;
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-
-	$image_size = $_FILES['cover']['size'];
-	if ($image_size > 0) {
- 
- 
-		//$date2 = date_format(Carbon::now(), "Ymd");
-		$date2       = date("YmdHis");
-	 
-		$filename = (basename($_FILES["cover"]["name"]));
-		$filename = explode(".", $filename);
-		$ext 	  = $filename[1];
-		$filename = $filename[0];
-		$filename = $filename."_".$date2;
-		$filename = $filename.".".$ext;
-		$target_dir = "../files/cover/";
-		$target_file = $target_dir . $filename;
-		$uploadOk = 1;
-		$imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-		
-		if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-		&& $imageFileType != "gif") {
-			echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-			$uploadOk = 0;
-		} else {
-			move_uploaded_file($_FILES["cover"]["tmp_name"], $target_file);
-			$sql	 		= "UPDATE users SET 
+        if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+        && $imageFileType != "gif") {
+            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            $uploadOk = 0;
+        } else {
+            move_uploaded_file($_FILES["cover"]["tmp_name"], $target_file);
+            $sql	 		= "UPDATE users SET 
 								cover = '$filename'
 								WHERE id='".$_SESSION['id_user']."'";
-			$db->query($sql);
-		}
-	}
-	
- 
-	echo("<script>window.location.href = '../profile'; </script>");
+            $db->query($sql);
+        }
+    }
 
 
-
+    echo("<script>window.location.href = '../profile'; </script>");
 }
 
 
@@ -189,11 +172,10 @@ $id_user = ($_SESSION['id_user']);
 
 
 
-
-if(isset($_POST["action"]) && $_POST["action"]=="submit_feed"){
-	$created_date = date("Y-m-d H:i:s");
-	$date_id = date("YmdHis");
-	$sql = "
+if (isset($_POST["action"]) && $_POST["action"]=="submit_feed") {
+    $created_date = date("Y-m-d H:i:s");
+    $date_id = date("YmdHis");
+    $sql = "
 			   INSERT INTO posting 
 			   SET 
 			   role='".$_SESSION['userrole']."',
@@ -201,106 +183,78 @@ if(isset($_POST["action"]) && $_POST["action"]=="submit_feed"){
 			   id_parent='".addslashes($_POST['id_parent'])."', 
 			   date_id='".$date_id."', 
 			   created_date='".$created_date."',
-			   id_ownership='".$_GET['id']."',
+			   id_ownership='".addslashes($_POST['id_ownership'])."',
 			   created_by='".$_SESSION['id_user']."'
-		   "; 
-  $db->query($sql);
-  
-  
-  
-  
-  
-  
-  
-  
-  
-	
-	$image_size = $_FILES['img']['size'];
-	if ($image_size > 0) {
- 
- 
-		$path = $_FILES['img']['name'];
-		$file_extension = pathinfo($path, PATHINFO_EXTENSION);
-  
-		$date2       = date("YmdHis");
-	 
-		$filename = (basename($_FILES["img"]["name"]));
-		$filename = explode(".", $filename);
-		$ext 	  = $filename[1];
-		$filename = $filename[0];
-		$filename = $filename."_".$date2;
-		$filename = $filename.".".$ext;
-		$target_dir = "../announcement/img/";
-		$target_file = $target_dir . $filename;
-		$uploadOk = 1;
-		$imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-		
-		if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-		&& $imageFileType != "gif" && $imageFileType != "pdf") {
-			echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-			$uploadOk = 0;
-			$sql = "DELETE FROM posting WHERE date_id='".$date_id."'";
-			$db->query($sql);
-		} else {
+		   ";
+    $db->query($sql);
 
 
 
-	$sql = "
+
+
+
+
+
+
+
+    $image_size = $_FILES['img']['size'];
+    if ($image_size > 0) {
+        $path = $_FILES['img']['name'];
+        $file_extension = pathinfo($path, PATHINFO_EXTENSION);
+
+        $date2       = date("YmdHis");
+
+        $filename = (basename($_FILES["img"]["name"]));
+        $filename = explode(".", $filename);
+        $ext 	  = $filename[1];
+        $filename = $filename[0];
+        $filename = $filename."_".$date2;
+        $filename = $filename.".".$ext;
+        $target_dir = "../announcement/img/";
+        $target_file = $target_dir . $filename;
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+        if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+        && $imageFileType != "gif" && $imageFileType != "pdf") {
+            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            $uploadOk = 0;
+            $sql = "DELETE FROM posting WHERE date_id='".$date_id."'";
+            $db->query($sql);
+        } else {
+            $sql = "
 		SELECT ne.empid AS userid, lower(ne.name) as name, ne.image_staff as image, ne.back_title
 		FROM `new_employee` ne
 		WHERE ne.empid='".$_SESSION['username']."'
 	";
-	$datas = $db->query($sql)->fetchArray();
-	$sender_name = ucwords($datas['name']).", ".$datas['back_title'];
+            $datas = $db->query($sql)->fetchArray();
+            $sender_name = ucwords($datas['name']).", ".$datas['back_title'];
 
- 
-	$sql = "
+
+            $sql = "
 		SELECT lower(s.name) as name, s.email 
 		FROM  `student` s
 		LEFT JOIN student_program sp ON sp.matrix_no = s.matrix_no
 		WHERE s.student_status='ACTIVE' 
 		AND s.email !='' AND s.email IS NOT NULL
 	";
-	
-	$allstudent = $db->query($sql)->fetchAll();
-  
-			move_uploaded_file($_FILES["img"]["tmp_name"], $target_file);
-			$sql	 		= "UPDATE posting SET 
+
+            $allstudent = $db->query($sql)->fetchAll();
+
+            move_uploaded_file($_FILES["img"]["tmp_name"], $target_file);
+            $sql	 		= "UPDATE posting SET 
 								img = '$filename',
 								file_extension = '".$file_extension."'
 								WHERE date_id='".$date_id."'";
-			$db->query($sql);
-		}
+            $db->query($sql);
+        }
+    }
 
 
 
 
 
- 
-
-
-
-
-
-
-
-
-
-
-	
-	
-
-
-
-
-
-	}
-	
-   
-  
-  
-   
-   echo("<script>window.location.href = '../profile/index.php".($_GET['id']!=$_SESSION['id_user']?"?id=".$_GET['id']:"")."'; </script>");
+    echo("<script>window.location.href = '../profile/index.php".($_POST['id_ownership']!=$_SESSION['id_user'] ? "?id=".$_POST['id_ownership'] : "")."'; </script>");
 }
 
 
@@ -385,7 +339,7 @@ $profile = $db->query($sql)->fetchArray();
 			<!-- Inner content -->
 			<div class="content-inner">
 
-				<?php if($_SESSION['id_user'] !=$_GET['id']){?>
+				<?php if ($_SESSION['id_user'] !=$_GET['id']) {?>
 				<!-- Page header -->
 				<div class="page-header page-header-light">
 
@@ -393,7 +347,7 @@ $profile = $db->query($sql)->fetchArray();
 					<div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline">
 						<div class="d-flex">
 							<div class="breadcrumb">
-								<a href="../my_friend" class="breadcrumb-item">Friend</a>
+								<a href="javascript: history.go(-1)" class="breadcrumb-item">Friend</a>
                                 <span class="breadcrumb-item active"><?=$profile['name']?><?php echo('&nbsp;');?></span>
 							</div>
 
@@ -431,29 +385,29 @@ $profile = $db->query($sql)->fetchArray();
 						</div>
 						<div class="ml-lg-3 mt-2 mt-lg-0">
 							<ul class="list-inline list-inline-condensed mb-0">
-								<?php if($is_editable == 1){ ?>
+								<?php if ($is_editable == 1) { ?>
 									<li class="list-inline-item"><a href="#" class="btn btn-light border-transparent" data-toggle="modal" data-target="#modal_cover_image"><i class="icon-file-picture mr-2"></i> Cover image</a></li>
 									<li class="list-inline-item"><a href="#" id="<?=$_GET['id']?>" class="btn btn-light border-transparent edit_bio" data-toggle="modal" data-target="#modal_bio" ><i class="icon-file-stats mr-2"></i> Biography</a></li>
 								<?php } else {?>
 
 									<?php
-										$sql = "
+                                        $sql = "
 											SELECT count(*) as total_data 
 											FROM friend 
 											WHERE id_requester='".$_SESSION['id_user']."'
 											AND id_approver='".$_GET['id']."'
 											
-										"; 
-										$friendcheck = $db->query($sql)->fetchArray();
-									
-										?>
-									<?php if($profile['approval_status'] == null){ ?>
+										";
+								    $friendcheck = $db->query($sql)->fetchArray();
+
+								    ?>
+									<?php if ($profile['approval_status'] == null) { ?>
 										<li class="list-inline-item"><a href="#" class="btn btn-light border-transparent edit_data" id="<?=$_GET['id']?>" data-toggle="modal" data-target="#modal_addfriend" ><i class="icon-user-plus mr-2"></i> Add Friend</a></li>
-									<?php } elseif($profile['approval_status'] == '9'){ ?>
+									<?php } elseif ($profile['approval_status'] == '9') { ?>
 										<li class="list-inline-item"><a href="#" class="btn btn-light border-transparent disabled" ><i class="icon-user-plus mr-2"></i> Friend Request has Been Sent</a></li>
-									<?php } elseif($profile['approval_status'] == '1'){ ?>
+									<?php } elseif ($profile['approval_status'] == '1') { ?>
 										<li class="list-inline-item"><a href="#" class="btn btn-light border-transparent confirm_data" id="<?=$_GET['id']?>"  data-toggle="modal" data-target="#modal_confirmfriend" ><i class="icon-user-plus mr-2"></i> Confirm Friend</a></li>
-									<?php } elseif($profile['approval_status'] == '2'){ ?>
+									<?php } elseif ($profile['approval_status'] == '2') { ?>
 										<li class="list-inline-item"><a href="#" class="btn btn-light border-transparent edit_data" id="<?=$_GET['id']?>" ><i class="icon-envelope mr-2"></i> Direct Message</a></li>
 									<?php } else {?> 
 									<?php } ?> 
@@ -586,6 +540,8 @@ $profile = $db->query($sql)->fetchArray();
 										<textarea id="text_area" name="content" class="form-control mb-2" rows="3" cols="1" placeholder="Enter your announcement..." ></textarea>
 										<input id="picture_name" type="hidden" class="form-control mb-2" placeholder="Picture" readonly>
 										
+										<input type="hidden" name="id_ownership" value="<?=$_GET['id']?>"> 
+
 										<input type="hidden" name="action" value="submit_feed">
 										<input type="hidden" name="id_parent" value="0">
 										<div class="d-flex align-items-center">
@@ -625,9 +581,9 @@ $profile = $db->query($sql)->fetchArray();
 
 						  
  						<?php
-							$dtold = "";
+                            $dtold = "";
 
-							$sql = "
+$sql = "
 								SELECT fc.file_extension, fc.img, fc.id, s.id_user AS userid, LOWER(s.name) AS name, 
 								fc.content, fc.created_date, u.image, '' AS back_title
 								FROM `posting` fc 
@@ -637,24 +593,24 @@ $profile = $db->query($sql)->fetchArray();
 								AND fc.id_ownership='".$_GET['id']."'
 								ORDER BY fc.created_date DESC
 							";
- 
-							$datas = $db->query($sql)->fetchAll();
 
-						?>
+$datas = $db->query($sql)->fetchAll();
+
+?>
  
 						<?php foreach ($datas as $data) {  ?>
 													<?php
-														$ts   = strtotime($data['created_date']);
-													?>
+                                $ts   = strtotime($data['created_date']);
+						    ?>
 	
 
 
-							 <?php 
-								$datelabel = date('d F Y', $ts);
-								$dtnow = $datelabel;
-							 ?>
+							 <?php
+                                $datelabel = date('d F Y', $ts);
+						    $dtnow = $datelabel;
+						    ?>
 							
-							<?php if($dtnow != $dtold){ ?>
+							<?php if ($dtnow != $dtold) { ?>
 							<!-- Date stamp -->
 							<div class="timeline-date text-muted" style="padding-bottom: 0.5rem; margin-bottom: 0.5rem;">	
 								<?=$dtnow;?>
@@ -662,15 +618,15 @@ $profile = $db->query($sql)->fetchArray();
 							<!-- /date stamp -->
 							<?php } ?>
 							<?php
-								$dtold = $dtnow; 							
-							?>
+						       $dtold = $dtnow;
+						    ?>
 
 							<?php
-								$image = $data['image'];
-								if($image == ""){
-									$image = "../files/image/profile.png";
-								}
-							?>
+						        $image = $data['image'];
+						    if ($image == "") {
+						        $image = "../files/image/profile.png";
+						    }
+						    ?>
 
 							<!-- Tasks -->
 							<div class="timeline-row">
@@ -685,27 +641,24 @@ $profile = $db->query($sql)->fetchArray();
 												<!--div class="d-sm-flex align-item-sm-center flex-sm-nowrap mb-1"-->
 												<div>
 													<div>
-														<h6><a href="../profile/index.php<?=($data['userid']!=$_SESSION['id_user'])?"?id=".$data['userid']:""?>"><?=ucwords($data['name'])?></a></h6>
+														<h6><a href="../profile/index.php<?=($data['userid']!=$_SESSION['id_user']) ? "?id=".$data['userid'] : ""?>"><?=ucwords($data['name'])?></a></h6>
 														<p>
 														
-														<?php if($data['img'] !=''){ ?>
+														<?php if ($data['img'] !='') { ?>
 
 
 
 														<?php
-														if ( $data['file_extension'] =="pdf") { 
-														
-
-														?>
+						                                if ($data['file_extension'] =="pdf") {
+						                                    ?>
 														<iframe src="../announcement/img/<?=$data['img']?>" style="height: 350px;width: <?=($device == 1 ? "100%" : "75%")?>"></iframe><br/>
 
 
 
 															<a href="../announcement/img/<?=$data['img']?>" > Download </a>
 
-														<?php 
-
-														} else { ?>
+														<?php
+						                                } else { ?>
 															<img src="../announcement/img/<?=$data['img']?>" style="width: <?=($device == 1 ? "100%" : "50%")?>">
 														
 														<?php } ?>
@@ -725,8 +678,8 @@ $profile = $db->query($sql)->fetchArray();
 														
 														
  						<?php
-							 
-							$sql = "
+
+                            $sql = "
 
 
 							SELECT fc.file_extension, fc.img, fc.id, s.id_user AS userid, LOWER(s.name) AS name, 
@@ -738,13 +691,13 @@ $profile = $db->query($sql)->fetchArray();
 							ORDER BY fc.created_date ASC
 
 							";
-							$subdatas = $db->query($sql)->fetchAll();
+						    $subdatas = $db->query($sql)->fetchAll();
 
-						?>
+						    ?>
  
 						<?php foreach ($subdatas as $subdata) {  ?>
 
-							<?php if($subdata['userid'] != $_SESSION['id_user']){?>
+							<?php if ($subdata['userid'] != $_SESSION['id_user']) {?>
 								<span style="font-size: 11px; "><a href="../profile/index.php?id=<?=$subdata['userid']?>"><?=ucwords($subdata['name']);?></a> - <?=($subdata['content']);?><br/></span>
 							<?php } else { ?>
 								<span style="font-size: 11px; "><a href="../profile"><?=ucwords($subdata['name']);?></a> - <?=($subdata['content']);?><br/></span>
@@ -767,6 +720,8 @@ $profile = $db->query($sql)->fetchArray();
 														<textarea style="font-size: 10px; padding-bottom: 3px; padding-top: 3px;" name="content" class="form-control mb-1" rows="1" cols="1" placeholder="Enter your comment..." required></textarea>
 														<input type="hidden" name="id_parent" value="<?=$data['id']?>">
 														<input type="hidden" name="action" value="submit_feed">
+														<input type="hidden" name="id_ownership" value="<?=$_GET['id']?>"> 
+
 													</td>
 													<td style="width: 20%">
 															<button type="submit" name="button" class="badge badge-sm" style="background: #2980b9; color: #fff; float: right">Submit</button>
@@ -851,61 +806,51 @@ $profile = $db->query($sql)->fetchArray();
 									<div class="card-body">
 										<form action="<?=$_SERVER["PHP_SELF"]?>" method="post" enctype="multipart/form-data">
 											<input type="hidden" name="action" value="submit_profile"> 
+											<input type="hidden" name="username" value="<?=$profile['username']?>">
 											<div class="form-group">
 												<div class="row">
-
 													<div class="col-lg-6">
 														<label style="font-size: 12px; margin-bottom: 3px">Name </label>
 														<input type="text" name="name" value="<?=$profile['name'];?>" class="form-control form-control-sm"">
 													</div>
-
-
-											<div class="col-md-2">	
-												<div class="form-group">
-													<label style="font-size: 12px; margin-bottom: 3px">Place of Birth:</label>
-													<input type="text" id="pob" name="pob" class="form-control form-control-sm" placeholder="Place of Birth" value="<?=$profile['pob'];?>">
-												</div>	
-											</div>
-											<div class="col-md-2">	
-												<div class="form-group">
-													<label style="font-size: 12px; margin-bottom: 3px">Date of Birth:</label>
-													<input type="date" id="dob"  name="dob" class="form-control form-control-sm" placeholder="Date of Birth" value="<?=$profile['dob'];?>">
-												</div>
-											</div> 
-
-											<div class="col-md-2">
-							                            <label style="font-size: 12px; margin-bottom: 3px">Country</label>
-							                            <select name="country"  class="form-control form-control-sm">
-							                                <?=dd_menu('region', 'id_wil', 'nm_wil','-- Please Choose --', 'WHERE id_level_wil=0' ,'ASC', $profile['country'])?>
-							                            </select>
+													<div class="col-md-2">	
+														<div class="form-group">
+															<label style="font-size: 12px; margin-bottom: 3px">Place of Birth:</label>
+															<input type="text" id="pob" name="pob" class="form-control form-control-sm" placeholder="Place of Birth" value="<?=$profile['pob'];?>">
+														</div>	
 													</div>
-
+													<div class="col-md-2">	
+														<div class="form-group">
+															<label style="font-size: 12px; margin-bottom: 3px">Date of Birth:</label>
+															<input type="date" id="dob"  name="dob" class="form-control form-control-sm" placeholder="Date of Birth" value="<?=$profile['dob'];?>">
+														</div>
+													</div> 
+													<div class="col-md-2">
+														<label style="font-size: 12px; margin-bottom: 3px">Country</label>
+														<select name="country"  class="form-control form-control-sm">
+															<?=dd_menu('region', 'id_wil', 'nm_wil', '-- Please Choose --', 'WHERE id_level_wil=0', 'ASC', $profile['country'])?>
+														</select>
+													</div>
 												</div>
 											</div>
-
-
-
 											<div class="form-group">
 												<div class="row">
-
-
-
 													<div class="col-lg-3">
 														<label style="font-size: 12px; margin-bottom: 3px">State/Province</label>
 							                            <select name="state"  class="form-control form-control-sm">
-							                                <?=dd_menu('region', 'id_wil', 'nm_wil','-- Please Choose --', 'WHERE id_level_wil=1' ,'ASC', $profile['state'])?>
+							                                <?=dd_menu('region', 'id_wil', 'nm_wil', '-- Please Choose --', 'WHERE id_level_wil=1', 'ASC', $profile['state'])?>
 							                            </select> 
 													</div>
 													<div class="col-lg-3">
 														<label style="font-size: 12px; margin-bottom: 3px">City</label>
 							                            <select name="city"  class="form-control form-control-sm">
-							                                <?=dd_menu('region', 'id_wil', 'nm_wil','-- Please Choose --', 'WHERE id_level_wil=2' ,'ASC', $profile['city'])?>
+							                                <?=dd_menu('region', 'id_wil', 'nm_wil', '-- Please Choose --', 'WHERE id_level_wil=2', 'ASC', $profile['city'])?>
 							                            </select>
 													</div>
 													<div class="col-lg-3">
 														<label style="font-size: 12px; margin-bottom: 3px">District</label>
 							                            <select name="district"  class="form-control form-control-sm">
-							                                <?=dd_menu('region', 'id_wil', 'nm_wil','-- Please Choose --', 'WHERE id_level_wil=3' ,'ASC', $profile['district'])?>
+							                                <?=dd_menu('region', 'id_wil', 'nm_wil', '-- Please Choose --', 'WHERE id_level_wil=3', 'ASC', $profile['district'])?>
 							                            </select>
 													</div>
 													<div class="col-md-3">									
@@ -914,31 +859,8 @@ $profile = $db->query($sql)->fetchArray();
 															<input type="text" name="sub_district" value="<?=$profile['sub_district']?>" class="form-control form-control-sm" placeholder="Sub District" >
 														</div>
 													</div>	
-
 												</div>
 											</div>
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 											<div class="form-group">
 												<div class="row">
 													<div class="col-md-12">
@@ -959,7 +881,6 @@ $profile = $db->query($sql)->fetchArray();
 													</div>
 												</div>
 											</div>
-
 											<div class="form-group">
 												<div class="row">
 													<div class="col-lg-6">
@@ -972,7 +893,6 @@ $profile = $db->query($sql)->fetchArray();
 													</div>
 												</div>
 											</div>
-
 					                        <div class="form-group">
 					                        	<div class="row">
 					                        		<div class="col-lg-6">
@@ -980,7 +900,6 @@ $profile = $db->query($sql)->fetchArray();
 														<input type="text" name="phone" value="<?=$profile['phone'];?>" class="form-control form-control-sm">
 														<span class="form-text text-muted">+99-99-9999-9999</span>
 					                        		</div>
-
 													<div class="col-lg-6">
 														<label style="font-size: 12px; margin-bottom: 3px">Upload profile image</label>
 														<div class="custom-file">
@@ -991,10 +910,10 @@ $profile = $db->query($sql)->fetchArray();
 													</div>
 					                        	</div>
 					                        </div>
-											<?php if($is_editable == 1){ ?>
-					                        <div class="text-right">
-					                        	<button type="submit" class="btn btn-primary">Save changes</button>
-					                        </div>
+											<?php if ($is_editable == 1) { ?>
+												<div class="text-right">
+													<button type="submit" class="btn btn-primary">Save changes</button>
+												</div>
 											<?php } ?>
 										</form>
 									</div>
@@ -1090,7 +1009,7 @@ $profile = $db->query($sql)->fetchArray();
 													</div>
 												</div>
 											</div>
-											<?php if($is_editable == 1){ ?>
+											<?php if ($is_editable == 1) { ?>
 					                        <div class="text-right">
 					                        	<button type="submit" class="btn btn-primary">Save changes</button>
 					                        </div>
@@ -1121,7 +1040,7 @@ $profile = $db->query($sql)->fetchArray();
 
 										<?php
 
-										$sql = "
+						                    $sql = "
 											SELECT c.id, c.title, p.name as teacher_name, c.overview, c.start_date, c.price, c.thumbnail
 											FROM course c
 											LEFT JOIN teacher t ON t.id_course = c.id
@@ -1129,9 +1048,9 @@ $profile = $db->query($sql)->fetchArray();
 											LEFT JOIN `student` st ON st.id_course = c.id
 											WHERE st.id_user = '".$_GET['id']."'
 											";
-										$datas = $db->query($sql)->fetchAll();
+$datas = $db->query($sql)->fetchAll();
 
-										?>
+?>
 
 										<?php foreach ($datas as $data) {  ?>
 
@@ -1159,7 +1078,7 @@ $profile = $db->query($sql)->fetchArray();
 
 										<?php
 
-										$sql = "
+$sql = "
 											SELECT c.id, c.title, p.name as teacher_name, c.overview, c.start_date, c.price, c.thumbnail
 											FROM course c
 											LEFT JOIN teacher t ON t.id_course = c.id
@@ -1167,9 +1086,9 @@ $profile = $db->query($sql)->fetchArray();
 											LEFT JOIN `student` st ON st.id_course = c.id
 											WHERE t.id_user = '".$_GET['id']."'
 											";
-										$datas = $db->query($sql)->fetchAll();
+$datas = $db->query($sql)->fetchAll();
 
-										?>
+?>
 
 										<?php foreach ($datas as $data) {  ?>
 
@@ -1216,6 +1135,8 @@ $profile = $db->query($sql)->fetchArray();
 
 								<form action="<?=$_SERVER["PHP_SELF"]?>" method="post" enctype="multipart/form-data">
 								<input type="hidden" name="action" value="submit_cover"> 
+
+								
 								<div class="modal-body">
 									
  

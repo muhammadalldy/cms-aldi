@@ -2,6 +2,9 @@
 		            <!-- Large modal -->
 					<div id="modal_large" class="modal fade" tabindex="-1">
 					<form id="update_form" method="post" enctype="multipart/form-data">
+
+					<input type="hidden" id="id_user" name="id_user" > 
+
 						<div class="modal-dialog modal-lg">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -141,6 +144,12 @@
 												<div class="form-group">
 													<label style="font-size: 12px; margin-bottom: 3px">Phone:</label> 
 													<input type="text" id="phone" name="phone" class="form-control form-control-sm" placeholder="Phone">
+												</div>
+											</div> 										
+											<div class="col-md-3">									
+												<div class="form-group">
+													<label style="font-size: 12px; margin-bottom: 3px">Zip Code:</label> 
+													<input type="text" id="zip_code" name="zip_code" class="form-control form-control-sm" placeholder="Zip Code">
 												</div>
 											</div> 										
 

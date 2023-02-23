@@ -11,9 +11,14 @@ if(isset($_POST["action"]) && $_POST["action"]=="submit"){
 
   
 	if($users['total_dt'] == 0){
-
-		$sql = "INSERT INTO users SET username='".addslashes($_POST['username'])."', 
-											password='".md5($_POST['password'])."' ";		
+		$created_date = date("Y-m-d H:i:s");
+		$sql = "INSERT INTO users 
+					SET 
+						created_date='".$created_date."', 
+						username='".addslashes($_POST['username'])."', 
+						password='".md5($_POST['password'])."'
+						
+						";		
 		$db->query($sql);
 
 
