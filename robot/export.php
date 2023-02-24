@@ -11,19 +11,18 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 */
  
-$max_token = 100;
+$max_token = 1000;
 
 
 
 $sql = "SELECT id, LOWER(title) AS title FROM `user_sys_menu` ORDER BY title";
 
 $sql = "
-SELECT um.id, LOWER(md.module_name) AS module, LOWER(um.title) AS submodule
-FROM `user_sys_menu` um 
-LEFT JOIN `user_sys_module` md ON md.module_id = um.module
-LEFT JOIN `robot` r ON r.id_parent = um.id
+SELECT um.no as id, um.name
+FROM `product_20230223` um 
+LEFT JOIN `product` r ON r.id_parent = um.no
 WHERE r.id IS NULL
-ORDER BY um.title
+ORDER BY um.no
 ";
 
 $datas = $db->query($sql)->fetchAll();
@@ -31,7 +30,7 @@ $datas = $db->query($sql)->fetchAll();
 						 
 foreach ($datas as $data) { 
 	
-	$_POST['question'] = "write me a brief one-sentence description for the ".addslashes($data['submodule'])." sub-module in the context of ".addslashes($data['module'])." module ";
+	$_POST['question'] = "Tulis deskripsi produk yang menarik untuk ".addslashes($data['name'])." yang akan dijual di Shopee.";
 
 	echo("<br/>");
 
@@ -39,7 +38,7 @@ foreach ($datas as $data) {
 	$created_date = date("Y-m-d H:i:s");
 	$date_id = date("YmdHis");
 	$sql = "
-			   INSERT INTO robot 
+			   INSERT INTO product 
 			   SET 
 			   role='".$_SESSION['userrole']."',
 			   question='".addslashes($_POST['question'])."', 
@@ -66,7 +65,7 @@ foreach ($datas as $data) {
   $answer = ($result['choices'][0]['text']);
    
 	$sql = "
-		UPDATE robot 
+		UPDATE product 
 		SET answer='".addslashes($answer)."'
 		WHERE date_id='".$date_id."'
 	"; 
