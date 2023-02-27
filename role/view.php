@@ -84,8 +84,8 @@ if(isset($_POST["button"]) && $_POST["button"]=="submit"){
                                 <?php
                           
 									$sql = "
-											SELECT ne.id, ne.role
-											FROM roles ne 
+											SELECT ne.id, ne.name as role
+											FROM role ne 
 											WHERE ne.id = '".$_GET['id']."'
 									";
 

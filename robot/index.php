@@ -40,7 +40,7 @@ if (isset($_POST["action"]) && $_POST["action"]=="submit") {
   
 
  
-  $client = OpenAI::client('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');
+  $client = OpenAI::client($gptkey);
 
   $result = $client->completions()->create([
 	  'model' => 'text-davinci-003',
